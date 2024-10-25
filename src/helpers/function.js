@@ -4,6 +4,15 @@ import axios from 'axios';
 
 const myFunction = {
 
+    deleteEvent(elemento) {
+        axios.post(store.baseUrlApi + 'deleteEvent', { id: elemento }).then(response => {
+            //console.log('evento eliminato');
+            this.fillUpTable()
+            store.showDialog = false
+
+        })
+    },
+
     fillUpTable() {
         axios
             .get(`${store.baseUrlApi}allEvents`)

@@ -1,15 +1,20 @@
 import { reactive } from "vue";
 
 const myData = reactive({
+    //URL
     baseUrlApi: "http://localhost:8000/api/",
     baseUrl: "http://localhost:8000/",
 
-    events: [],
+    //ALL EVENTS FROM DB
     eventsInTable: [],
+    showDialog: false,
 
+    //SEND BUTTON
     loading: false,
     success: false,
     errors: {},
+
+    //EVENT DETAILS
     title: '',
     userEmail: '',
     description: '',
@@ -19,6 +24,7 @@ const myData = reactive({
     startHour: '',
     endHour: '',
 
+    //INPUT FILTER
     userInput: '',
 });
 
