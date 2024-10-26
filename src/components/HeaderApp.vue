@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-    <section class="bg-warning mb-2">
+    <section class="bg-purple">
         <div class="container d-flex justify-content-between">
 
             <!-- LOGO -->
@@ -32,8 +32,8 @@ export default {
             <!-- SEARCH INPUT -->
             <div class="nav-element align-content-center">
                 <span>Filtra eventi per email</span>
-                <input class="mx-2 border border-dark rounded bg-light fs-6" type="search" v-model="store.userInput"
-                    name="" id="" placeholder=" example@example.it">
+                <input class="mx-2 px-1 border border-dark rounded bg-light fs-6" type="search"
+                    v-model="store.userInput" name="" id="" placeholder=" example@example.it">
             </div>
 
         </div>

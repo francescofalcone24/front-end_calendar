@@ -6,7 +6,9 @@ const myData = reactive({
     baseUrl: "http://localhost:8000/",
 
     //ALL EVENTS FROM DB
+    events: [],
     eventsInTable: [],
+    filterEvents: [],
     showDialog: false,
 
     //SEND BUTTON
