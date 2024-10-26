@@ -156,7 +156,7 @@ export default {
       <div class="">
         <!-- CALENDAR -->
         <vue-cal :time-from="0 * 60" :time-to="24 * 60" :disable-views="['years', 'year']"
-          :editable-events="{ title: true, drag: false, resize: false, delete: true, create: false, }"
+          :editable-events="{ title: true, drag: false, resize: false, delete: false, create: false, }"
           :events="Function.filterEvent()" :on-event-click="onEventClick"
           class="vuecal--full-height-delete calendar_table">
         </vue-cal>
