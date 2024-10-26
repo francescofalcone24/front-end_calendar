@@ -27,84 +27,48 @@ const myFunction = {
             .then(response => {
                 store.events = response.data.events;
                 store.eventsInTable = [];
+                // helper function per aggiungere gli eventi
+                const addEvent = (start, end, title, content, organizer_email, id) => {
+                    store.eventsInTable.push({
+                        start,
+                        end,
+                        title,
+                        content,
+                        class: 'sport',
+                        organizer_email,
+                        id,
+                    });
+                };
                 store.events.forEach(element => {
                     let startDay = new Date(element.start_date);
                     let endDay = new Date(element.end_date);
                     let daysOfDifference = Math.floor((endDay - startDay) / (1000 * 60 * 60 * 24));
                     //l'evento inizia e finisce lo stesso giorno 
                     if (element.start_date == element.end_date) {
-                        store.eventsInTable.push({
-                            start: element.start_date + ' ' + element.start_hour,
-                            end: element.end_date + ' ' + element.end_hour,
-                            title: element.title,
-                            content: element.description,
-                            class: 'sport',
-                            organizer_email: element.user_email,
-                            id: element.id,
-                        })
+                        addEvent(`${element.start_date} ${element.start_hour}`, `${element.end_date} ${element.end_hour}`, element.title, element.description, element.user_email, element.id);
 
                         //l'evento finisce il giorno dopo della data d'inizio 
                     } else if (daysOfDifference == 1) {
-                        store.eventsInTable.push({
-                            start: element.start_date + ' ' + element.start_hour,
-                            end: element.start_date + ' ' + '23:59',
-                            title: element.title,
-                            content: element.description,
-                            class: 'sport',
-                            organizer_email: element.user_email,
-                            id: element.id,
-                        });
-                        store.eventsInTable.push({
-                            start: element.end_date + ' ' + '00:00',
-                            end: element.end_date + ' ' + element.end_hour,
-                            title: element.title,
-                            content: element.description,
-                            class: 'sport',
-                            organizer_email: element.user_email,
-                            id: element.id,
-                        });
+                        addEvent(`${element.start_date} ${element.start_hour}`, `${element.start_date} 23:59`, element.title, element.description, element.user_email, element.id);
+                        addEvent(`${element.end_date} 00:00`, `${element.end_date} ${element.end_hour}`, element.title, element.description, element.user_email, element.id);
 
                         //l'evento dura piu di 2 giorni
                     } else if (daysOfDifference > 1) {
-                        store.eventsInTable.push({
-                            start: element.start_date + ' ' + element.start_hour,
-                            end: element.start_date + ' ' + '23:59',
-                            title: element.title,
-                            content: element.description,
-                            class: 'sport',
-                            organizer_email: element.user_email,
-                            id: element.id,
-                        });
-                        // Converti la stringa in un oggetto Date
+                        addEvent(`${element.start_date} ${element.start_hour}`, `${element.start_date} 23:59`, element.title, element.description, element.user_email, element.id);
+
+                        // converto la stringa in un oggetto Date
                         let date = new Date(element.start_date);
-                        // Aggiungi un giorno
+                        // aggiungo un giorno alla data 
                         date.setDate(date.getDate() + 1);
-                        // Riformatta la data in stringa nel formato 'YYYY-MM-DD'
+                        // riformatto la data in stringa rimuovendo dalla T , ore e minuti
                         let newDateString = date.toISOString().split('T')[0];
                         while (newDateString < element.end_date) {
-                            store.eventsInTable.push({
-                                start: newDateString + ' ' + '00:00',
-                                end: newDateString + ' ' + '23:59',
-                                title: element.title,
-                                content: element.description,
-                                class: 'sport',
-                                organizer_email: element.user_email,
-                                id: element.id,
-                            });
+                            addEvent(`${newDateString} 00:00`, `${newDateString} 23:59`, element.title, element.description, element.user_email, element.id);
                             let nextDay = new Date(newDateString);
                             nextDay.setDate(nextDay.getDate() + 1);
                             newDateString = nextDay.toISOString().split('T')[0];
-
                         }
-                        store.eventsInTable.push({
-                            start: element.end_date + ' ' + '00:00',
-                            end: element.end_date + ' ' + element.end_hour,
-                            title: element.title,
-                            content: element.description,
-                            class: 'sport',
-                            organizer_email: element.user_email,
-                            id: element.id,
-                        });
+                        addEvent(`${element.end_date} 00:00`, `${element.end_date} ${element.end_hour}`, element.title, element.description, element.user_email, element.id);
                     }
 
 
