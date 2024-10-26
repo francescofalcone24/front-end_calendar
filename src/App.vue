@@ -20,9 +20,6 @@ export default {
       store,
       Function,
       selectedEvent: {},
-
-
-
     };
 
   },
@@ -32,7 +29,6 @@ export default {
     onEventClick(event, e) {
       this.selectedEvent = event
       store.showDialog = true
-
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation()
     }
@@ -73,35 +69,28 @@ export default {
                 <form class="col-12 p-0 text-start" @submit.prevent="Function.sendForm()">
                   <div class="row m-0">
 
-                    <div class="mb-4 col-3">
+                    <div class="mb-4 col-4">
                       <input class="border-0 border-bottom form-control" :class="{ 'is-invalid': store.errors.title }"
-                        type="text" name="title" id="title" placeholder="Title" v-model="store.title">
+                        type="text" name="title" id="title" placeholder="Title" v-model="store.title" required>
                       <p v-for="(error, index) in store.errors.title" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
                       </p>
                     </div>
-                    <div class="mb-4 col-3">
+                    <div class="mb-4 col-4">
                       <input class="border-0 border-bottom form-control" :class="{ 'is-invalid': store.errors.email }"
-                        type="text" name="user_email" id="userEmail" placeholder="Email" v-model="store.userEmail">
+                        type="text" name="user_email" id="userEmail" placeholder="Email" v-model="store.userEmail"
+                        pattern="^[^\s@]+@[^\s@]+.[^\s@]{2,}$" autocomplete="off" required>
                       <p v-for="(error, index) in store.errors.userEmail" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
                       </p>
                     </div>
-                    <div class="mb-4 col-3">
+                    <div class="mb-4 col-4">
                       <textarea class="border-0 border-bottom form-control"
                         :class="{ 'is-invalid': store.errors.message }" name="description" id="description" cols="30"
-                        rows="1" placeholder="Description" v-model="store.description"></textarea>
+                        rows="1" placeholder="Description" v-model="store.description" required></textarea>
                       <p v-for="(error, index) in store.errors.description" :key="`message-error-${index}`"
-                        class="invalid-feedback">
-                        {{ error }}
-                      </p>
-                    </div>
-                    <div class="mb-4 col-3">
-                      <input class="border-0 border-bottom form-control" :class="{ 'is-invalid': store.errors.name }"
-                        type="text" name="location" id="location" placeholder="Location" v-model="store.location">
-                      <p v-for="(error, index) in store.errors.location" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
                       </p>
@@ -110,7 +99,7 @@ export default {
                       <label for="startDate">Start Date</label><br>
                       <input type="date" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.startDate }" name="start_date" id="startDate"
-                        v-model="store.startDate">
+                        v-model="store.startDate" required>
                       <p v-for="(error, index) in store.errors.startDate" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -120,7 +109,7 @@ export default {
                       <label for="endDate">End Date</label><br>
                       <input type="date" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_date" id="endDate"
-                        v-model="store.endDate">
+                        v-model="store.endDate" required>
                       <p v-for="(error, index) in store.errors.endDate" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -130,7 +119,7 @@ export default {
                       <label for="startHour">Start at</label><br>
                       <input type="time" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.startHour }" name="start_hour" id="startHour"
-                        v-model="store.startHour">
+                        v-model="store.startHour" required>
                       <p v-for="(error, index) in store.errors.startHour" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -140,7 +129,7 @@ export default {
                       <label for="endHour">End at</label><br>
                       <input type="time" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_hour" id="endHour"
-                        v-model="store.endHour">
+                        v-model="store.endHour" required>
                       <p v-for="(error, index) in store.errors.endHour" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -150,9 +139,10 @@ export default {
                   <p class="text-light ms-3">(* all fields are mandatory)</p>
 
                   <div class="mt-2 text-center">
-                    <button class="btn btn-lg btn-primary text-white" type="submit">{{ store.loading ?
-                      'Sending...' : 'Send'
-                      }}</button>
+                    <button class="btn btn-lg btn-primary text-white" type="submit">{{
+                      store.loading ?
+                        'Sending...' : 'Send'
+                    }}</button>
                   </div>
                 </form>
               </div>

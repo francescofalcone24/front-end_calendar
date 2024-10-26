@@ -87,7 +87,7 @@ const myFunction = {
             store.title = '';
             store.userEmail = '';
             store.description = '';
-            store.location = '';
+            // store.location = '';
             store.startDate = '';
             store.endDate = '';
             store.startHour = '';
@@ -109,7 +109,6 @@ const myFunction = {
             'title': store.title,
             'user_email': store.userEmail,
             'description': store.description,
-            'location': store.location,
             'start_date': store.startDate,
             'end_date': store.endDate,
             'start_hour': store.startHour,

@@ -20,7 +20,6 @@ const myData = reactive({
     title: '',
     userEmail: '',
     description: '',
-    location: '',
     startDate: '',
     endDate: '',
     startHour: '',
