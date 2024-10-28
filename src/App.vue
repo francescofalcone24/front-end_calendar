@@ -20,6 +20,8 @@ export default {
       store,
       Function,
       selectedEvent: {},
+      currentDay: '',
+      currentTime: '',
     };
 
   },
@@ -31,12 +33,24 @@ export default {
       store.showDialog = true
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation()
-    }
+    },
+
+    getCurrentDate() {
+      const oggi = new Date();
+      const anno = oggi.getFullYear();
+      const mese = String(oggi.getMonth() + 1).padStart(2, '0');
+      const giorno = String(oggi.getDate()).padStart(2, '0');
+      const ore = String(oggi.getHours()).padStart(2, '0');
+      const minuti = String(oggi.getMinutes()).padStart(2, '0');
+      this.currentDay = `${anno}-${mese}-${giorno}`;
+      this.currentTime = `${ore}:${minuti}`;
+
+    },
   },
   mounted() {
 
-    Function.fillUpTable()
-
+    Function.fillUpTable();
+    this.getCurrentDate();
 
   },
 }
@@ -99,7 +113,7 @@ export default {
                       <label for="startDate">Start Date</label><br>
                       <input type="date" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.startDate }" name="start_date" id="startDate"
-                        v-model="store.startDate" required>
+                        v-model="store.startDate" required :min="this.currentDay">
                       <p v-for="(error, index) in store.errors.startDate" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -109,7 +123,7 @@ export default {
                       <label for="endDate">End Date</label><br>
                       <input type="date" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_date" id="endDate"
-                        v-model="store.endDate" required>
+                        v-model="store.endDate" required :min="store.startDate">
                       <p v-for="(error, index) in store.errors.endDate" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -119,7 +133,7 @@ export default {
                       <label for="startHour">Start at</label><br>
                       <input type="time" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.startHour }" name="start_hour" id="startHour"
-                        v-model="store.startHour" required>
+                        v-model="store.startHour" required :min="this.currentTime">
                       <p v-for="(error, index) in store.errors.startHour" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -129,7 +143,7 @@ export default {
                       <label for="endHour">End at</label><br>
                       <input type="time" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_hour" id="endHour"
-                        v-model="store.endHour" required>
+                        v-model="store.endHour" required :min="store.startHour">
                       <p v-for="(error, index) in store.errors.endHour" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
