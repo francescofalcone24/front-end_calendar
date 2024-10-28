@@ -123,7 +123,7 @@ export default {
                       <label for="endDate">End Date</label><br>
                       <input type="date" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_date" id="endDate"
-                        v-model="store.endDate" required :min="store.startDate">
+                        v-model="store.endDate" required :min="store.startDate ? store.startDate : this.currentDay">
                       <p v-for="(error, index) in store.errors.endDate" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
@@ -143,7 +143,7 @@ export default {
                       <label for="endHour">End at</label><br>
                       <input type="time" class="border-0 border-bottom form-control me-3"
                         :class="{ 'is-invalid': store.errors.endDate }" name="end_hour" id="endHour"
-                        v-model="store.endHour" required :min="store.startHour">
+                        v-model="store.endHour" required :min="store.startHour ? store.startHour : this.currentTime">
                       <p v-for="(error, index) in store.errors.endHour" :key="`message-error-${index}`"
                         class="invalid-feedback">
                         {{ error }}
